@@ -1,0 +1,33 @@
+<%= form_for(contact) do |f| %>
+  <% if contact.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(contact.errors.count, "error") %> prohibited this contact from being saved:</h2>
+
+      <ul>
+      <% contact.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= dynamic_nested_field(f, :phone_numbers) do |fields| %>
+      <%= fields.label :phone_numbers %>
+      <div class="field">
+        <%= fields.text_field :number %>
+        <%= dynamic_delete_link 'delete' %>
+      </div>
+    <% end %>
+    <%= link_to 'add phone number', '#', class: 'dynamic-add' %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
