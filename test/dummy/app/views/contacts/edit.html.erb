@@ -1,0 +1,14 @@
+<%= form_for Contact.new, url: '#', method: :patch, html: { multipart: true } do |f| %>
+  <div class="form-group">
+    <%= f.label :phone_numbers, 'Phone Numbers' %>
+    <div class='phone-numbers-group'>
+      <%= dynamic_nested_field(f, :phone_numbers, include_blank: true) { |fields| render partial: 'contacts/phone_number', locals: { fields: fields } } %>
+      <%= dynamic_add_link 'add phone number' %>
+    </div>
+    <div class='email-addresses-group'>
+      <%= dynamic_nested_field(f, :email_addresses) { |fields| render partial: 'contacts/email_address', locals: { fields: fields } } %>
+      <%= dynamic_add_link 'add email address' %>
+    </div>
+  </div>
+  <%= submit_tag 'Save' %>
+<% end %>
